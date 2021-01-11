@@ -6,6 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Componente } from '../../interfaces/pregunta';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import Swal from 'sweetalert2';
+import { ComponenteService } from '../../services/componente.service';
 @Component({
   selector: 'app-componente',
   templateUrl: './componente.component.html',
@@ -14,21 +15,33 @@ import Swal from 'sweetalert2';
 export class ComponenteComponent implements OnInit {
 
   componente: Componente = {nombre: '', id: ''};
-  preguntas: Observable<Pregunta[]>;
+  preguntas: Pregunta[];
   form: FormGroup;
 
   constructor(private examenService: ExamenService,
               private activatedRote: ActivatedRoute,
-              private fb: FormBuilder) {
+              private fb: FormBuilder,
+              private componenteService: ComponenteService
+              ) {
     const id = this.activatedRote.snapshot.paramMap.get('id');
     this.crearFormulario();
     if (id !== 'nuevo'){
 
-      this.examenService.obtenerComponente(id).subscribe(componente => {
+      this.componenteService.obtenerComponente(id).subscribe(componente => {
         this.componente = componente;
         this.componente.id = id;
         console.log(componente);
-        this.preguntas = this.examenService.obtenerPreguntasComponente(id);
+        // this.preguntas = this.examenService.obtenerPreguntasComponente(id);
+        this.examenService.obtenerPreguntasComponente(id).subscribe(s => {
+          this.preguntas = s;
+        })
+        this.examenService.size$.next(id)
+        // this.preguntas = this.examenService.items2$;
+        // this.preguntas.subscribe(dat => {
+        //   console.log(dat)
+        // })
+
+
         // preguntas = this.preguntas.subscribe()
         this.crearFormulario();
       });
@@ -60,13 +73,13 @@ export class ComponenteComponent implements OnInit {
 
     let peticion: Observable<Componente>;
     if (this.componente.id){
-      peticion = this.examenService.crearComponente(this.componente);
+      peticion = this.componenteService.crearComponente(this.componente);
     }else{
       const componenteTemp = {...this.form.value };
       // componenteTemp.respuesta = this.componente;
       console.log(componenteTemp);
 
-      peticion = this.examenService.crearComponente(componenteTemp);
+      peticion = this.componenteService.crearComponente(componenteTemp);
     }
     peticion.subscribe(componente => {
       console.log(componente);

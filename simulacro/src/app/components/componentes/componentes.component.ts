@@ -12,7 +12,6 @@ export class ComponentesComponent implements OnInit {
   constructor(private activatedRote: ActivatedRoute, private examenService: ExamenService) {
     const id = this.activatedRote.snapshot.paramMap.get('id');
     if (id !== 'nuevo'){
-
       this.examenService.obtenerPregunta(id);
     }
    }
