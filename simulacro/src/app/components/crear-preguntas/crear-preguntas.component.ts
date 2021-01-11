@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ExamenService } from '../../services/examen.service';
 
 @Component({
   selector: 'app-crear-preguntas',
@@ -9,7 +10,7 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class CrearPreguntasComponent implements OnInit {
 
   form: FormGroup;
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private examenService: ExamenService) {
     this.crearFormulario()
   }
 
@@ -21,7 +22,11 @@ export class CrearPreguntasComponent implements OnInit {
       return;
     }
 
-    console.log(this.form);
+    console.log(this.form.value);
+    // tslint:disable-next-line: deprecation
+    this.examenService.guardaPregunta(this.form.value).subscribe(resp => {
+      console.log(resp);
+    });// /7.subscribe(res => console.log());
 
   }
   private crearFormulario(): void{

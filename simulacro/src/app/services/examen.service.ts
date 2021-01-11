@@ -11,7 +11,11 @@ export class ExamenService {
   constructor(private http: HttpClient) { }
 
   obtenerPreguntas(){
-    return this.http.get(`${this.urlBase}/preguntas`)
+    return this.http.get(`${this.urlBase}/preguntas.json`);
+  }
+
+  guardaPregunta(pregunta: Pregunta): Observable<any>{
+    return  this.http.post(`${this.urlBase}/preguntas.json`, pregunta);
   }
 
   crearPregunta(pregunta: Pregunta): Observable<any>{
