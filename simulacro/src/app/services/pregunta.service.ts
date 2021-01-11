@@ -65,7 +65,7 @@ export class ExamenService {
 
 
   crearPregunta(pregunta: Pregunta): Observable<any>{
-    this.preguntasCollection.add(pregunta);
+    // this.preguntasCollection.add(pregunta);
     return this.http.post(`${this.urlBase}/preguntas.json`, pregunta);
   }
 

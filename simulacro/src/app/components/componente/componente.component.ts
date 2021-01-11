@@ -31,15 +31,10 @@ export class ComponenteComponent implements OnInit {
         this.componente = componente;
         this.componente.id = id;
         console.log(componente);
-        // this.preguntas = this.examenService.obtenerPreguntasComponente(id);
         this.examenService.obtenerPreguntasComponente(id).subscribe(s => {
           this.preguntas = s;
         })
         this.examenService.size$.next(id)
-        // this.preguntas = this.examenService.items2$;
-        // this.preguntas.subscribe(dat => {
-        //   console.log(dat)
-        // })
 
 
         // preguntas = this.preguntas.subscribe()
@@ -72,24 +67,27 @@ export class ComponenteComponent implements OnInit {
     Swal.showLoading();
 
     let peticion: Observable<Componente>;
-    if (this.componente.id){
-      peticion = this.componenteService.crearComponente(this.componente);
-    }else{
-      const componenteTemp = {...this.form.value };
-      // componenteTemp.respuesta = this.componente;
-      console.log(componenteTemp);
 
-      peticion = this.componenteService.crearComponente(componenteTemp);
+    if (this.componente.id){
+      this.form.value.id = this.componente.id;
+      peticion = this.componenteService.actualizarComponente(this.form.value);
+    }else{
+      this.componente = {...this.form.value };
+      // componenteTemp.respuesta = this.componente;
+      console.log(this.componente);
+
+      peticion = this.componenteService.crearComponente(this.componente);
     }
     peticion.subscribe(componente => {
       console.log(componente);
-
+      this.componente.id = componente['name'];
+      console.log(this.componente)
       Swal.fire({
         title: componente.nombre,
         text: 'Se actualizó correctamente',
         icon: 'success'
       });
-      this.componente = componente;
+      // this.componente = componente;
 
     },
     err => {
@@ -103,8 +101,8 @@ export class ComponenteComponent implements OnInit {
 
   private crearFormulario(): void{
     this.form = this.fb.group({
-      nombreComponente: ['', Validators.required],
-      cantidadPreguntas: ['', Validators.required],
+      nombre: [this.componente.nombre, Validators.required],
+      cantPreguntas: [this.componente.cantPreguntas, Validators.required],
       // respuesta: [this.respuesta, Validators.required],
     });
   }

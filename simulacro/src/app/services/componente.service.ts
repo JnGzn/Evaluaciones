@@ -19,4 +19,10 @@ export class ComponenteService {
     return this.http.post<Componente>(`${this.urlBase}/componentes.json`, componente);
   }
 
+  actualizarComponente(pregunta: Componente): Observable<Componente>{
+    const preguntaTemp = { ...pregunta };
+    delete preguntaTemp.id;
+    return this.http.put<Componente>(`${this.urlBase}/componentes/${pregunta.id}.json`, preguntaTemp);
+  }
+
 }
