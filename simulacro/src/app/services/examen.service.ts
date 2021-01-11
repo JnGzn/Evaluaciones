@@ -35,8 +35,11 @@ export class ExamenService {
     return  this.http.post(`${this.urlBase}/preguntas.json`, pregunta);
   }
 
+
+
+
   crearPregunta(pregunta: Pregunta): Observable<any>{
-    return this.http.post(`${this.urlBase}/preguntas.json`, pregunta)
+    return this.http.post(`${this.urlBase}/preguntas.json`, pregunta);
     // .pipe(
     //   map( res => {
     //     heroe.id = res['name'];

@@ -2,16 +2,17 @@ import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ExamenService } from '../../services/examen.service';
-import { Pregunta } from '../../interfaces/pregunta';
 import { Observable } from 'rxjs';
-
+import { Pregunta } from 'src/app/interfaces/pregunta';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-pregunta',
   templateUrl: './pregunta.component.html',
   styleUrls: ['./pregunta.component.css']
 })
 export class CrearPreguntasComponent implements OnInit {
-  pregunta: Pregunta = {enunciado : '', id: '', opciones: []};
+  pregunta: Pregunta = {enunciado : '', id: '', opciones: [], respuesta: ''};
+  respuesta = '';
   form: FormGroup;
   constructor(private fb: FormBuilder, private examenService: ExamenService, private activatedRote: ActivatedRoute) {
 
@@ -35,18 +36,47 @@ export class CrearPreguntasComponent implements OnInit {
     if (this.form.invalid){
       return;
     }
+
+
+    Swal.fire({
+      title: 'Espere',
+      text: 'Guardando Información',
+      icon: 'info',
+      allowOutsideClick: false
+    });
+    Swal.showLoading();
+
     let peticion: Observable<Pregunta>;
     if (this.pregunta.id){
       peticion = this.examenService.actualizarPregunta(this.pregunta);
     }else{
-      peticion = this.examenService.crearPregunta(this.form.value);
+      const preguntaTemp = {...this.form.value}
+      preguntaTemp.respuesta = this.respuesta;
+      peticion = this.examenService.crearPregunta(preguntaTemp);
     }
-    peticion.subscribe();
+    peticion.subscribe(pregunta => {
+      Swal.fire({
+        title: pregunta.enunciado,
+        text: 'Se actualizó correctamente',
+        icon: 'success'
+      });
+
+    },
+    err => {
+      Swal.fire({
+        title: 'Se ha producion un error',
+        text: err.error.error.message,
+        icon: 'error'
+      });
+    });
+
+
 
   }
   private crearFormulario(): void{
     this.form = this.fb.group({
       enunciado: [this.pregunta.enunciado, Validators.required],
+      // respuesta: [this.respuesta, Validators.required],
       opciones: this.fb.array([
         this.pregunta.opciones
       ])

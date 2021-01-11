@@ -14,6 +14,7 @@ import { CrearEvaluacionComponent } from './components/evaluaciones/evaluaciones
 import { EvaluacionComponent } from './components/evaluacion/evaluacion.component';
 import { ComponenteComponent } from './components/componente/componente.component';
 import { ComponentesComponent } from './components/componentes/componentes.component';
+// import Swal from 'sweetalert2'
 
 @NgModule({
   declarations: [

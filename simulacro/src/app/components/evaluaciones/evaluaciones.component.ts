@@ -7,7 +7,7 @@ import { Componente } from '../../interfaces/pregunta';
   styleUrls: ['./evaluaciones.component.css']
 })
 export class CrearEvaluacionComponent implements OnInit {
-  componentes: Componente[] = [{id:'21', nombre: 'Matematicas', duracionMinutos: 2, cantPreguntas: 2}];
+  componentes: Componente[]// = [{id:'21', nombre: 'Matematicas', duracionMinutos: 2, cantPreguntas: 2}];
   constructor() { }
 
   ngOnInit(): void {

@@ -5,6 +5,7 @@
       <label for="enunciado" class="form-label">Ingrese el eunciado</label>
       <textarea class="form-control" id="enunciado" rows="3"
       formControlName="enunciado"></textarea>
+      <!-- <input type="hidden" formControlName="respuesta">   -->
     </div>
   </div>
 
@@ -12,6 +13,8 @@
     <div class="input-group input-group-sm mb-3" *ngFor="let item of opciones.controls; let i = index">
       <span class="input-group-text" id="inputGroup-sizing-sm">Opción {{ i + 1}} </span>
       <input class="form-control" type="text" [formControlName]="i">
+      <input type="radio" class="btn-check" [id]="i" name="respuesta" [value]="item.value" autocomplete="off" [checked]="respuesta == item.value">
+      <label class="btn btn-outline-success" [for]="i" (click)="respuesta = item.value">Respuesta Correcta</label>
       <button class="btn btn-danger" (click)="eliminarOpciones(i)">Borrar</button>
     </div>
 
@@ -36,4 +39,7 @@
 </pre>
 <pre>
   {{ form.value | json}}
+</pre>
+<pre>
+  {{ respuesta | json}}
 </pre>
