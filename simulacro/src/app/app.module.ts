@@ -9,7 +9,7 @@ import { HomeComponent } from './components/home/home.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CrearPreguntasComponent } from './components/crear-preguntas/crear-preguntas.component';
-
+import { AuthModule } from '@auth0/auth0-angular';
 
 @NgModule({
   declarations: [
@@ -24,7 +24,11 @@ import { CrearPreguntasComponent } from './components/crear-preguntas/crear-preg
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AuthModule.forRoot({
+      domain: 'jngzn.us.auth0.com',
+      clientId: 'k3eD5m6Y2oWyJftzQcosJWwmWwwOhcCh'
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]
