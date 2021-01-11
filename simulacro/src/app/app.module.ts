@@ -8,8 +8,11 @@ import { ExamenComponent } from './components/examen/examen.component';
 import { HomeComponent } from './components/home/home.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
-import { CrearPreguntasComponent } from './components/crear-preguntas/crear-preguntas.component';
+import { CrearPreguntasComponent } from './components/pregunta/pregunta.component';
 import { AuthModule } from '@auth0/auth0-angular';
+import { CrearEvaluacionComponent } from './components/crear-evaluacion/crear-evaluacion.component';
+import { EvaluacionComponent } from './components/evaluacion/evaluacion.component';
+import { ComponenteComponent } from './components/componente/componente.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +20,10 @@ import { AuthModule } from '@auth0/auth0-angular';
     NavbarComponent,
     ExamenComponent,
     HomeComponent,
-    CrearPreguntasComponent
+    CrearPreguntasComponent,
+    CrearEvaluacionComponent,
+    EvaluacionComponent,
+    ComponenteComponent
 
   ],
   imports: [

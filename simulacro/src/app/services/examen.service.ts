@@ -17,6 +17,16 @@ export class ExamenService {
     );
   }
 
+  obtenerPregunta(id: string): Observable<Pregunta>{
+    return this.http.get<Pregunta>(`${this.urlBase}/preguntas/${id}.json`);
+  }
+
+  actualizarPregunta(pregunta: Pregunta): Observable<Pregunta>{
+    const preguntaTemp = { ...pregunta };
+    delete preguntaTemp.id;
+    return this.http.put<Pregunta>(`${this.urlBase}/preguntas/${pregunta.id}.json`, preguntaTemp);
+  }
+
   guardaPregunta(pregunta: Pregunta): Observable<any>{
     return  this.http.post(`${this.urlBase}/preguntas.json`, pregunta);
   }

@@ -1,8 +1,10 @@
+
 export interface Pregunta {
   id: string;
   enunciado: string;
-  opciones: string[];
-  repuesta?: Respuesta
+  componente?: Componente;
+  opciones?: string[];
+  repuesta?: Respuesta;
 }
 
 export interface Opciones {
@@ -17,4 +19,18 @@ export interface Respuesta {
   id: string;
   idPregunta: string;
   respuesta: string;
+}
+
+export interface Examen {
+  id: string;
+  componentes: Componente[];
+  preguntas?: Pregunta[];
+  respuesta?: Respuesta[];
+}
+
+export interface Componente {
+  id: string;
+  nombre: string;
+  duracionMinutos: number;
+  cantPreguntas: number;
 }
