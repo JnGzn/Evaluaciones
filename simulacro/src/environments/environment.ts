@@ -5,14 +5,14 @@
 export const environment = {
   production: false,
   firebase: {
-    apiKey: '<your-key>',
-    authDomain: '<your-project-authdomain>',
-    databaseURL: '<your-database-URL>',
-    projectId: '<your-project-id>',
-    storageBucket: '<your-storage-bucket>',
-    messagingSenderId: '<your-messaging-sender-id>',
-    appId: '<your-app-id>',
-    measurementId: '<your-measurement-id>'
+    apiKey: "AIzaSyAIOcY_4H7VYADNrd52xGvmhhPwMH1zWwQ",
+    authDomain: "simulacros-5658f.firebaseapp.com",
+    databaseURL: "https://simulacros-5658f-default-rtdb.firebaseio.com",
+    projectId: "simulacros-5658f",
+    storageBucket: "simulacros-5658f.appspot.com",
+    messagingSenderId: "275958861819",
+    appId: "1:275958861819:web:f570c31b6aae77c8dfc55e",
+    measurementId: "G-LGGW73QC1E"
   }
 };
 

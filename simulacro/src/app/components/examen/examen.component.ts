@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Pregunta } from '../../interfaces/pregunta';
 import { Observable } from 'rxjs';
-import { ExamenService } from '../../services/examen.service';
+import { ExamenService } from '../../services/pregunta.service';
 
 @Component({
   selector: 'app-examen',

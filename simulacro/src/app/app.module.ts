@@ -14,6 +14,9 @@ import { CrearEvaluacionComponent } from './components/evaluaciones/evaluaciones
 import { EvaluacionComponent } from './components/evaluacion/evaluacion.component';
 import { ComponenteComponent } from './components/componente/componente.component';
 import { ComponentesComponent } from './components/componentes/componentes.component';
+import { AngularFirestoreModule } from '@angular/fire/firestore'
+import { AngularFireModule } from '@angular/fire';
+import { environment } from '../environments/environment';
 // import Swal from 'sweetalert2'
 
 @NgModule({
@@ -34,6 +37,8 @@ import { ComponentesComponent } from './components/componentes/componentes.compo
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
+    AngularFirestoreModule,
+    AngularFireModule.initializeApp(environment.firebase),
     AuthModule.forRoot({
       domain: 'jngzn.us.auth0.com',
       clientId: 'k3eD5m6Y2oWyJftzQcosJWwmWwwOhcCh'

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { ExamenService } from '../../services/examen.service';
+import { ExamenService } from '../../services/pregunta.service';
 import { Observable } from 'rxjs';
 import { Pregunta } from 'src/app/interfaces/pregunta';
 import Swal from 'sweetalert2';
@@ -12,17 +12,22 @@ import Swal from 'sweetalert2';
 })
 export class CrearPreguntasComponent implements OnInit {
   pregunta: Pregunta = {enunciado : '', id: '', opciones: [], respuesta: ''};
+  idComponente: string;
   respuesta = '';
   form: FormGroup;
   constructor(private fb: FormBuilder, private examenService: ExamenService, private activatedRote: ActivatedRoute) {
 
     const id = this.activatedRote.snapshot.paramMap.get('id');
+    this.idComponente = this.activatedRote.snapshot.paramMap.get('idComponente');
     this.crearFormulario();
     if (id !== 'nuevo'){
 
       this.examenService.obtenerPregunta(id).subscribe(pregunta => {
         if (pregunta){
+          console.log(pregunta);
+          this.pregunta.id = id;
           this.pregunta =  pregunta;
+          this.pregunta.idComponente = this.idComponente;
         }
         this.crearFormulario();
       });
@@ -50,11 +55,14 @@ export class CrearPreguntasComponent implements OnInit {
     if (this.pregunta.id){
       peticion = this.examenService.actualizarPregunta(this.pregunta);
     }else{
-      const preguntaTemp = {...this.form.value}
-      preguntaTemp.respuesta = this.respuesta;
-      peticion = this.examenService.crearPregunta(preguntaTemp);
+      this.pregunta = {...this.form.value};
+      this.pregunta.respuesta = this.respuesta;
+      this.pregunta.idComponente = this.idComponente;
+      peticion = this.examenService.crearPregunta(this.pregunta);
     }
     peticion.subscribe(pregunta => {
+      console.log(pregunta);
+
       Swal.fire({
         title: pregunta.enunciado,
         text: 'Se actualizó correctamente',
