@@ -1,0 +1,30 @@
+<p>Crear Pregunta</p>
+<form  autocomplete="off" [formGroup]="form" (ngSubmit)="guardar()">
+  <div class="form-row">
+    <div class="col">
+      <label for="enunciado" class="form-label">Ingrese el eunciado</label>
+      <textarea class="form-control" id="enunciado" rows="3"
+      formControlName="enunciado"></textarea>
+    </div>
+  </div>
+
+  <div class="form-row" formArrayName="opciones">
+    <div class="input-group input-group-sm mb-3" *ngFor="let item of opciones.controls; let i = index">
+      <span class="input-group-text" id="inputGroup-sizing-sm">Opción {{ i + 1}} </span>
+      <input class="form-control" type="text" [formControlName]="i">
+      <button class="btn btn-danger" (click)="eliminarOpciones(i)">Borrar</button>
+    </div>
+
+  </div>
+
+  <button type="button" class="btn btn-primary  btn-block" (click)="agregarOpciones()">+Agregar</button>
+
+  <div class="form-group row">
+    <label class=" col-form-label">&nbsp;</label>
+    <div class="input-group col-md">
+      <button type="submit" class="btn btn-outline-primary btn-block">
+        Guardar
+      </button>
+    </div>
+  </div>
+</form>

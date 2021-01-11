@@ -117,8 +117,16 @@
               "devServerTarget": "simulacro:serve:production"
             }
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {}
         }
       }
-    }},
-  "defaultProject": "simulacro"
+    }
+  },
+  "defaultProject": "simulacro",
+  "cli": {
+    "analytics": false
+  }
 }

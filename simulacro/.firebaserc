@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "simulacros-5658f": {
+      "hosting": {
+        "simulacro": [
+          "simulacros-5658f"
+        ]
+      }
+    }
+  }
+}
