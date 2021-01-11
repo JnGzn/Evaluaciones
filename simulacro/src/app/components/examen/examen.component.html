@@ -1,16 +1,14 @@
 <h1>Presentar examen</h1>
 <br>
-<div class="row" *ngFor="let pregunta of preguntas">
+<div class="row" *ngFor="let pregunta of preguntas | async let i = index">
   <div class="col-12 col-md-8">
-    <p>{{ pregunta.enunciado }}</p>
+    <p><b>{{ i + 1 }}. </b>{{ pregunta.enunciado }}</p>
     <div class="form-check" *ngFor="let opcion of pregunta.opciones">
       <input class="form-check-input" [id]="pregunta.id" [name]="pregunta.id" type="radio">
       <label class="form-check-label" [for]="pregunta.id">
         {{opcion}}
       </label>
     </div>
-
-
   </div>
   <div class="col">
 

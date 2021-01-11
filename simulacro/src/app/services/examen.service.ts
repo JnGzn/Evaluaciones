@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Pregunta } from '../interfaces/pregunta';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -10,8 +11,10 @@ export class ExamenService {
   private urlBase = 'https://simulacros-5658f-default-rtdb.firebaseio.com'
   constructor(private http: HttpClient) { }
 
-  obtenerPreguntas(){
-    return this.http.get(`${this.urlBase}/preguntas.json`);
+  obtenerPreguntas(): Observable<Pregunta[]>{
+    return this.http.get(`${this.urlBase}/preguntas.json`).pipe(
+      map(res => this.crearArreglo(res))
+    );
   }
 
   guardaPregunta(pregunta: Pregunta): Observable<any>{
@@ -26,5 +29,20 @@ export class ExamenService {
     //     return heroe;
     //   })
     // );
+  }
+
+  private crearArreglo(preguntaObj: object): Pregunta[]{
+    const preguntas: Pregunta[] = [];
+    if (!preguntaObj) {
+      return preguntas;
+    }
+
+    Object.keys(preguntaObj).forEach(key => {
+      const pregunta: Pregunta = preguntaObj[key];
+      pregunta.id = key;
+      preguntas.push(pregunta);
+    });
+
+    return preguntas;
   }
 }

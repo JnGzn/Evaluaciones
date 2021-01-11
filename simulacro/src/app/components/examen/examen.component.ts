@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Pregunta } from '../../interfaces/pregunta';
+import { Observable } from 'rxjs';
+import { ExamenService } from '../../services/examen.service';
 
 @Component({
   selector: 'app-examen',
@@ -7,18 +9,11 @@ import { Pregunta } from '../../interfaces/pregunta';
   styleUrls: ['./examen.component.css']
 })
 export class ExamenComponent implements OnInit {
-  preguntas: Pregunta[] = [
-  {
-      id: 'hudij',
-      enunciado: 'Cuanto es 2+2',
-      opciones: ['2','3','4']
-    }
-
-  ]
-  constructor() { }
+  preguntas: Observable<Pregunta[]>;
+  constructor(private examenService: ExamenService) { }
 
   ngOnInit(): void {
-
+    this.preguntas = this.examenService.obtenerPreguntas();
   }
 
 }
