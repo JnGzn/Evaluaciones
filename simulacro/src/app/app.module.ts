@@ -10,9 +10,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CrearPreguntasComponent } from './components/pregunta/pregunta.component';
 import { AuthModule } from '@auth0/auth0-angular';
-import { CrearEvaluacionComponent } from './components/crear-evaluacion/crear-evaluacion.component';
+import { CrearEvaluacionComponent } from './components/evaluaciones/evaluaciones.component';
 import { EvaluacionComponent } from './components/evaluacion/evaluacion.component';
 import { ComponenteComponent } from './components/componente/componente.component';
+import { ComponentesComponent } from './components/componentes/componentes.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { ComponenteComponent } from './components/componente/componente.componen
     CrearPreguntasComponent,
     CrearEvaluacionComponent,
     EvaluacionComponent,
-    ComponenteComponent
+    ComponenteComponent,
+    ComponentesComponent
 
   ],
   imports: [
