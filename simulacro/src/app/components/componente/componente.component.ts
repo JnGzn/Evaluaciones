@@ -10,6 +10,7 @@ import { ExamenService } from '../../services/examen.service';
 })
 export class ComponenteComponent implements OnInit {
 
+
   preguntas: Observable<Pregunta[]>;
   constructor(private examenService: ExamenService) { }
 
@@ -17,4 +18,7 @@ export class ComponenteComponent implements OnInit {
     this.preguntas = this.examenService.obtenerPreguntas();
   }
 
+  eliminarPregunta(id: string): void{
+    this.examenService.eliminarPregunta(id);
+  }
 }

@@ -3,8 +3,8 @@
 
 <div class="row">
   <div class="mb-3">
-    <label for="nombreevaluacion" class="form-label">Nombre Evaliacion</label>
-    <input type="text" id="nombreevaluacion" class="form-control">
+    <label for="nombreComponente" class="form-label">Nombre Componente</label>
+    <input type="text" id="nombreComponente" class="form-control">
   </div>
 </div>
 
@@ -35,9 +35,9 @@
             <button class="btn btn-info mr-1" [routerLink]="['/pregunta', item.id]">
               <i class="fa fa-pencil"></i>
             </button>
-            <!-- <button class="btn btn-danger" (click)="eliminarHeroe(heroe.id, i)">
+            <button class="btn btn-danger" (click)="eliminarPregunta(item.id)">
               <i class="fa fa-trash"></i>
-            </button> -->
+            </button>
 
           </td>
         </tr>

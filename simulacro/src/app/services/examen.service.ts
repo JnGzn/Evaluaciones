@@ -27,6 +27,10 @@ export class ExamenService {
     return this.http.put<Pregunta>(`${this.urlBase}/preguntas/${pregunta.id}.json`, preguntaTemp);
   }
 
+  eliminarPregunta(id: string): Observable<any>{
+    return this.http.delete(`${this.urlBase}/preguntas/${id}.json`);
+  }
+
   guardaPregunta(pregunta: Pregunta): Observable<any>{
     return  this.http.post(`${this.urlBase}/preguntas.json`, pregunta);
   }
