@@ -17,6 +17,7 @@ import { ComponentesComponent } from './components/componentes/componentes.compo
 import { AngularFirestoreModule } from '@angular/fire/firestore'
 import { AngularFireModule } from '@angular/fire';
 import { environment } from '../environments/environment';
+import { SpinnerComponent } from './components/shared/spinner/spinner.component';
 // import Swal from 'sweetalert2'
 
 @NgModule({
@@ -29,7 +30,8 @@ import { environment } from '../environments/environment';
     CrearEvaluacionComponent,
     EvaluacionComponent,
     ComponenteComponent,
-    ComponentesComponent
+    ComponentesComponent,
+    SpinnerComponent
 
   ],
   imports: [

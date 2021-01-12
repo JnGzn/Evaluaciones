@@ -11,7 +11,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./pregunta.component.css']
 })
 export class CrearPreguntasComponent implements OnInit {
-  pregunta: Pregunta = {enunciado : '', id: '', opciones: [], respuesta: ''};
+  pregunta: Pregunta;
   idComponente: string;
   respuesta = '';
   form: FormGroup;
@@ -19,7 +19,7 @@ export class CrearPreguntasComponent implements OnInit {
 
     const id = this.activatedRote.snapshot.paramMap.get('id');
     this.idComponente = this.activatedRote.snapshot.paramMap.get('idComponente');
-    this.crearFormulario();
+
     if (id !== 'nuevo'){
 
       this.examenService.obtenerPregunta(id).subscribe(pregunta => {
@@ -31,6 +31,9 @@ export class CrearPreguntasComponent implements OnInit {
         }
         this.crearFormulario();
       });
+    }else {
+      this.pregunta = {enunciado : '', id: 'nuevo', opciones: [], respuesta: ''};
+      this.crearFormulario();
     }
   }
 
@@ -52,7 +55,7 @@ export class CrearPreguntasComponent implements OnInit {
     Swal.showLoading();
 
     let peticion: Observable<Pregunta>;
-    if (this.pregunta.id){
+    if (this.pregunta.id !== 'nuevo'){
       peticion = this.examenService.actualizarPregunta(this.pregunta);
     }else{
       this.pregunta = {...this.form.value};

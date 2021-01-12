@@ -1,4 +1,11 @@
-<p>Crear Pregunta</p>
+<h1>Crear Pregunta</h1>
+<ng-container *ngIf="!pregunta  || !pregunta.id; else elseTemplate">
+<app-spinner></app-spinner>
+</ng-container>
+<ng-template #elseTemplate>
+
+
+
 <form  autocomplete="off" [formGroup]="form" (ngSubmit)="guardar()">
   <div class="form-row">
     <div class="col">
@@ -31,8 +38,8 @@
     </div>
   </div>
 </form>
-
-<pre>
+</ng-template>
+<!-- <pre>
   Estado Formulario:  {{ form.valid }}
   <br>
   Status: {{ form.status }}
@@ -42,4 +49,4 @@
 </pre>
 <pre>
   {{ respuesta | json}}
-</pre>
+</pre> -->

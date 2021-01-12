@@ -1,64 +1,70 @@
 <h1>Creacion Evaluacion</h1>
 
-<form autocomplete="off" [formGroup]="form" (ngSubmit)="guardar()">
+<ng-container *ngIf="!evaluacion; else elseTemplate">
+  <app-spinner></app-spinner>
+</ng-container>
 
-  <div class="row">
-    <div class="col-12 col-md-6">
-      <label for="nombre" class="form-label">Nombre Evaluacion</label>
-      <input type="text" id="nombre"  formControlName="nombre" class="form-control">
+<ng-template #elseTemplate>
+  <form autocomplete="off" [formGroup]="form" (ngSubmit)="guardar()">
+    <div class="row">
+      <div class="col-12 col-md-6">
+        <label for="nombre" class="form-label">Nombre Evaluacion</label>
+        <input type="text" id="nombre" formControlName="nombre" class="form-control">
+      </div>
+      <div class="col-12 col-md-6">
+        <label for="duracionMinutos" class="form-label">Duracion (Tiempo en Minutos)</label>
+        <input type="number" id="duracionMinutos" formControlName="duracionMinutos" class="form-control">
+      </div>
     </div>
-    <div class="col-12 col-md-6">
-      <label for="duracionMinutos" class="form-label">Duracion (Tiempo en Minutos)</label>
-      <input type="number" id="duracionMinutos"  formControlName="duracionMinutos" class="form-control">
-    </div>
+<div class="form-group row">
+  <label class=" col-form-label">&nbsp;</label>
+  <div class="input-group col-md">
+    <button type="submit" class="btn btn-outline-primary btn-block">
+      Guardar
+    </button>
   </div>
-
-
-  <div class="form-group row">
-    <label class=" col-form-label">&nbsp;</label>
-    <div class="input-group col-md">
-      <button type="submit" class="btn btn-outline-primary btn-block">
-        Guardar
-      </button>
-    </div>
-  </div>
+</div>
 </form>
+</ng-template>
 
-<div class="row" *ngIf="evaluacion.id">
+<div class="row" *ngIf="evaluacion && evaluacion.id !== 'nuevo'">
   <div class="col-12 text-right">
-    <button class="btn btn-primary " [routerLink]="['/componente' , 'nuevo' , evaluacion.id]"  >
+    <button class="btn btn-primary " [routerLink]="['/componente' , 'nuevo' , evaluacion.id]">
       <i class="fa fa-plus"></i>
       Agregar
     </button>
   </div>
+  <!-- <ng-container *ngIf="componentes == undefined" ; else templateComponents>
+    <app-spinner></app-spinner>
+  </ng-container> -->
+  <!-- <ng-template #templateComponents> -->
+    <div class="col-12">
+      <table class="table">
+        <thead class="table-dark">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Componentes</th>
+            <th scope="col">Tiempo</th>
+            <th scope="col">Ver</th>
+          </tr>
+        </thead>
 
-  <div class="col-12">
-    <table class="table">
-      <thead class="table-dark">
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">Componentes</th>
-          <th scope="col">Tiempo</th>
-          <th scope="col">Ver</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let item of componentes let i = index">
-          <th scope="row">{{  i + 1 }}</th>
-          <td>{{ item.nombre }}</td>
-          <td>{{ item.cantPreguntas }}</td>
-          <td>
-            <button class="btn btn-info mr-1" [routerLink]="['/componente' , item.id , evaluacion.id]">
-              <i class="fa fa-pencil"></i>
-            </button>
-            <button class="btn btn-danger" (click)="eliminarComponente(item.id)">
-              <i class="fa fa-trash"></i>
-            </button>
-
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+        <tbody>
+          <tr *ngFor="let item of componentes let i = index">
+            <th scope="row">{{ i + 1 }}</th>
+            <td>{{ item.nombre }}</td>
+            <td>{{ item.cantPreguntas }}</td>
+            <td>
+              <button class="btn btn-info mr-1" [routerLink]="['/componente' , item.id , evaluacion.id]">
+                <i class="fa fa-pencil"></i>
+              </button>
+              <button class="btn btn-danger" (click)="eliminarComponente(item.id)">
+                <i class="fa fa-trash"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  <!-- </ng-template> -->
 </div>
-

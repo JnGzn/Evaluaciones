@@ -13,97 +13,97 @@ import { ComponenteService } from '../../services/componente.service';
 @Component({
   selector: 'app-evaluacion',
   templateUrl: './evaluacion.component.html',
-  styleUrls: ['./evaluacion.component.css']
+  styleUrls: ['./evaluacion.component.css'],
 })
 export class EvaluacionComponent implements OnInit {
-
-  evaluacion: Examen = {id: '', nombre: '', duracionMinutos: 0};
-  componentes: Componente[] = [];
+  evaluacion: Examen;
+  componentes: Componente[];
   form: FormGroup;
 
-  constructor(private fb: FormBuilder, private _es: EvaluacionService,
-              private activatedRote: ActivatedRoute,
-              private componenteService: ComponenteService) {
-    this.crearFormulario();
+  constructor(
+    private fb: FormBuilder,
+    private _es: EvaluacionService,
+    private activatedRote: ActivatedRoute,
+    private componenteService: ComponenteService
+  ) {
     const id = this.activatedRote.snapshot.paramMap.get('id');
-    if (id !== 'nuevo'){
-
-      this._es.obtenerExamen(id).subscribe(evaluacion => {
+    if (id !== 'nuevo') {
+      this._es.obtenerExamen(id).subscribe((evaluacion) => {
         this.evaluacion = evaluacion;
         this.evaluacion.id = id;
+
         console.log(evaluacion);
-        this.componenteService.obtenerComponentesExamen(id).subscribe(s => {
-          console.log(s)
+        this.componenteService.obtenerComponentesExamen(id).subscribe((s) => {
+          this.componentes = [];
           this.componentes = s;
+          console.log('sssss')
         });
         this.componenteService.size$.next(id);
-
-
         this.crearFormulario();
       });
+    } else {
+      this.evaluacion = { id: 'nuevo', nombre: '', duracionMinutos: 0 };
+      this.crearFormulario();
     }
-
   }
 
-  eliminarComponente(id: string): void{
+  eliminarComponente(id: string): void {
     this.componenteService.eliminarComponente(id);
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
-  guardar(): void{
-    if (this.form.invalid){
+  guardar(): void {
+    if (this.form.invalid) {
       return;
     }
-
 
     Swal.fire({
       title: 'Espere',
       text: 'Guardando Información',
       icon: 'info',
-      allowOutsideClick: false
+      allowOutsideClick: false,
     });
     Swal.showLoading();
 
     let peticion: Observable<Examen>;
 
-    if (this.evaluacion.id){
+    if (this.evaluacion.id !== 'nuevo') {
       this.form.value.id = this.evaluacion.id;
       peticion = this._es.actualizarExamen(this.form.value);
-    }else{
-      this.evaluacion = {...this.form.value };
-      // componenteTemp.respuesta = this.componente;
+    } else {
+      this.evaluacion = { ...this.form.value };
+      delete this.evaluacion.id;
       console.log(this.evaluacion);
 
       peticion = this._es.crearExamen(this.evaluacion);
     }
-    peticion.subscribe(componente => {
-      console.log(componente);
-      this.evaluacion.id = componente['name'];
-      console.log(this.evaluacion)
-      Swal.fire({
-        title: componente.nombre,
-        text: 'Se actualizó correctamente',
-        icon: 'success'
-      });
-      // this.componente = componente;
-
-    },
-    err => {
-      Swal.fire({
-        title: 'Se ha producion un error',
-        text: err.error.error.message,
-        icon: 'error'
-      });
-    });
+    peticion.subscribe(
+      (componente) => {
+        console.log(componente);
+        this.evaluacion.id = componente['name'];
+        console.log(this.evaluacion);
+        Swal.fire({
+          title: componente.nombre,
+          text: 'Se actualizó correctamente',
+          icon: 'success',
+        });
+        // this.componente = componente;
+      },
+      (err) => {
+        Swal.fire({
+          title: 'Se ha producion un error',
+          text: err.error.error.message,
+          icon: 'error',
+        });
+      }
+    );
   }
 
-  private crearFormulario(): void{
+  private crearFormulario(): void {
     this.form = this.fb.group({
       nombre: [this.evaluacion.nombre, Validators.required],
       duracionMinutos: [this.evaluacion.duracionMinutos, Validators.required],
     });
-}
-
+  }
 }

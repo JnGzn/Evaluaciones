@@ -14,7 +14,7 @@ import { ComponenteService } from '../../services/componente.service';
 })
 export class ComponenteComponent implements OnInit {
 
-  componente: Componente = {nombre: '', id: ''};
+  componente: Componente;
   preguntas: Pregunta[];
   form: FormGroup;
 
@@ -25,12 +25,15 @@ export class ComponenteComponent implements OnInit {
               ) {
     const id = this.activatedRote.snapshot.paramMap.get('id');
     const idEvaluacion = this.activatedRote.snapshot.paramMap.get('idEvaluacion');
-    this.componente.idExamen = idEvaluacion;
-    this.crearFormulario();
-    if (id !== 'nuevo'){
 
+
+    if (id !== 'nuevo'){
+      this.componente = {nombre: '', id: ''};
+      this.crearFormulario();
       this.componenteService.obtenerComponente(id).subscribe(componente => {
         this.componente = componente;
+        this.componente.idExamen = idEvaluacion;
+
         this.componente.id = id;
         console.log(componente);
         this.examenService.obtenerPreguntasComponente(id).subscribe(s => {
@@ -43,6 +46,11 @@ export class ComponenteComponent implements OnInit {
         // preguntas = this.preguntas.subscribe()
         this.crearFormulario();
       });
+    }else {
+      this.componente = {nombre: '', id: 'nuevo'};
+      this.componente.idExamen = idEvaluacion;
+
+      this.crearFormulario();
     }
 
   }
@@ -71,7 +79,7 @@ export class ComponenteComponent implements OnInit {
 
     let peticion: Observable<Componente>;
 
-    if (this.componente.id){
+    if (this.componente.id !== 'nuevo'){
       this.form.value.id = this.componente.id;
       peticion = this.componenteService.actualizarComponente(this.form.value);
     }else{

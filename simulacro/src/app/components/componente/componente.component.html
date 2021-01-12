@@ -1,4 +1,8 @@
 <h1>Componentes</h1>
+<ng-container *ngIf="!componente; else elseTemplate">
+  <app-spinner></app-spinner>
+</ng-container>
+<ng-template #elseTemplate>
 
 
 <form autocomplete="off" [formGroup]="form" (ngSubmit)="guardar()">
@@ -24,13 +28,22 @@
   </div>
 
 </form>
-<div class="row" *ngIf="componente.id">
+
+
+
+<div class="row" *ngIf="!componente.id || componente.id !== 'nuevo'">
   <div class="col-12 text-right">
     <button class="btn btn-primary " [routerLink]="['/pregunta','nuevo',componente.id]"  >
       <i class="fa fa-plus"></i>
       Agregar
     </button>
   </div>
+  <ng-container *ngIf="!preguntas; else templateTabla">
+    <app-spinner></app-spinner>
+  </ng-container>
+  <ng-template #templateTabla>
+
+
 
   <div class="col-12">
     <table class="table">
@@ -57,5 +70,7 @@
       </tbody>
     </table>
   </div>
+</ng-template>
 </div>
 
+</ng-template>
