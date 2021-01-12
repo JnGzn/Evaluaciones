@@ -25,11 +25,6 @@ export class ExamenService {
         this.db.list('/preguntas', ref => ref.orderByChild('idComponente').equalTo(param)).valueChanges()
       )
     );
-
-    // this.items2$.subscribe(queriedItems => {
-    //   console.log(queriedItems);
-    // });
-
    }
 
   obtenerPreguntas(): Observable<Pregunta[]>{
@@ -44,7 +39,7 @@ export class ExamenService {
 
   actualizarPregunta(pregunta: Pregunta): Observable<Pregunta>{
     const preguntaTemp = { ...pregunta };
-    delete preguntaTemp.id;
+    // delete preguntaTemp.id;
     return this.http.put<Pregunta>(`${this.urlBase}/preguntas/${pregunta.id}.json`, preguntaTemp);
   }
 
@@ -66,7 +61,13 @@ export class ExamenService {
 
   crearPregunta(pregunta: Pregunta): Observable<any>{
     // this.preguntasCollection.add(pregunta);
-    return this.http.post(`${this.urlBase}/preguntas.json`, pregunta);
+    return this.http.post(`${this.urlBase}/preguntas.json`, pregunta).pipe(
+      map((resp: any) => {
+        pregunta.id = resp.name;
+        this.actualizarPregunta(pregunta).subscribe();
+        return resp;
+      })
+    )
   }
 
   private crearArreglo(preguntaObj: object): Pregunta[]{

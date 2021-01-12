@@ -1,24 +1,38 @@
 <h1>Creacion Evaluacion</h1>
 
+<form autocomplete="off" [formGroup]="form" (ngSubmit)="guardar()">
 
-<div class="row">
-  <div class="mb-3">
-    <label for="nombreevaluacion" class="form-label">Nombre Evaliacion</label>
-    <input type="text" id="nombreevaluacion" class="form-control">
+  <div class="row">
+    <div class="col-12 col-md-6">
+      <label for="nombre" class="form-label">Nombre Evaluacion</label>
+      <input type="text" id="nombre"  formControlName="nombre" class="form-control">
+    </div>
+    <div class="col-12 col-md-6">
+      <label for="duracionMinutos" class="form-label">Duracion (Tiempo en Minutos)</label>
+      <input type="number" id="duracionMinutos"  formControlName="duracionMinutos" class="form-control">
+    </div>
   </div>
-</div>
 
-<div class="row">
-  <div class="col text-right">
-    <button class="btn btn-primary " routerLink="/componente/nuevo"  >
+
+  <div class="form-group row">
+    <label class=" col-form-label">&nbsp;</label>
+    <div class="input-group col-md">
+      <button type="submit" class="btn btn-outline-primary btn-block">
+        Guardar
+      </button>
+    </div>
+  </div>
+</form>
+
+<div class="row" *ngIf="evaluacion.id">
+  <div class="col-12 text-right">
+    <button class="btn btn-primary " [routerLink]="['/componente' , 'nuevo' , evaluacion.id]"  >
       <i class="fa fa-plus"></i>
       Agregar
     </button>
   </div>
-</div>
 
-<div class="row">
-  <div class="col">
+  <div class="col-12">
     <table class="table">
       <thead class="table-dark">
         <tr>
@@ -29,20 +43,20 @@
         </tr>
       </thead>
       <tbody>
-        <!-- <tr *ngFor="let item of componentes let i = index">
+        <tr *ngFor="let item of componentes let i = index">
           <th scope="row">{{  i + 1 }}</th>
           <td>{{ item.nombre }}</td>
           <td>{{ item.cantPreguntas }}</td>
           <td>
-            <button class="btn btn-info mr-1" [routerLink]="['/heroe', heroe.id]">
+            <button class="btn btn-info mr-1" [routerLink]="['/componente' , item.id , evaluacion.id]">
               <i class="fa fa-pencil"></i>
             </button>
-            <button class="btn btn-danger" (click)="eliminarHeroe(heroe.id, i)">
+            <button class="btn btn-danger" (click)="eliminarComponente(item.id)">
               <i class="fa fa-trash"></i>
             </button>
 
           </td>
-        </tr> -->
+        </tr>
       </tbody>
     </table>
   </div>

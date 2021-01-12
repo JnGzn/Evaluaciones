@@ -46,7 +46,7 @@
           <th scope="row">{{  i + 1 }}</th>
           <td>{{ item.enunciado }}</td>
           <td>
-            <button class="btn btn-info mr-1" [routerLink]="['/pregunta', item.id]">
+            <button class="btn btn-info mr-1" [routerLink]="['/pregunta', item.id, componente.id]">
               <i class="fa fa-pencil"></i>
             </button>
             <button class="btn btn-danger" (click)="eliminarPregunta(item.id)">

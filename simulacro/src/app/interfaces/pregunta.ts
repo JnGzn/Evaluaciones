@@ -17,10 +17,8 @@ export interface Opciones {
 
 export interface Examen {
   id: string;
-  componentes: Componente[];
+  nombre: string;
   duracionMinutos: number;
-  preguntas?: Pregunta[];
-
 }
 
 export interface Componente {
@@ -28,5 +26,5 @@ export interface Componente {
   nombre: string;
   cantPreguntas?: number;
   preguntas?: Pregunta[];
-  idPreguntas?: string[];
+  idExamen?: string;
 }

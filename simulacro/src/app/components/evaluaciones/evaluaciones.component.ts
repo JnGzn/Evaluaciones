@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Componente } from '../../interfaces/pregunta';
+import { Componente, Examen } from '../../interfaces/pregunta';
+import { EvaluacionService } from '../../services/evaluacion.service';
 
 @Component({
   selector: 'app-crear-evaluacion',
@@ -7,10 +8,12 @@ import { Componente } from '../../interfaces/pregunta';
   styleUrls: ['./evaluaciones.component.css']
 })
 export class CrearEvaluacionComponent implements OnInit {
-  componentes: Componente[]// = [{id:'21', nombre: 'Matematicas', duracionMinutos: 2, cantPreguntas: 2}];
-  constructor() { }
+
+  evaluaciones: Examen[];
+  constructor(private evaluacionService: EvaluacionService) { }
 
   ngOnInit(): void {
+    this.evaluacionService.obtenerExamenes().subscribe(examen => this.evaluaciones = examen);
   }
 
 }

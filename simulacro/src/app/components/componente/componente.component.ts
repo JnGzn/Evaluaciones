@@ -24,6 +24,8 @@ export class ComponenteComponent implements OnInit {
               private componenteService: ComponenteService
               ) {
     const id = this.activatedRote.snapshot.paramMap.get('id');
+    const idEvaluacion = this.activatedRote.snapshot.paramMap.get('idEvaluacion');
+    this.componente.idExamen = idEvaluacion;
     this.crearFormulario();
     if (id !== 'nuevo'){
 
@@ -32,6 +34,7 @@ export class ComponenteComponent implements OnInit {
         this.componente.id = id;
         console.log(componente);
         this.examenService.obtenerPreguntasComponente(id).subscribe(s => {
+          console.log(s)
           this.preguntas = s;
         })
         this.examenService.size$.next(id)
@@ -72,11 +75,12 @@ export class ComponenteComponent implements OnInit {
       this.form.value.id = this.componente.id;
       peticion = this.componenteService.actualizarComponente(this.form.value);
     }else{
+      this.form.value.idExamen = this.componente.idExamen
       this.componente = {...this.form.value };
       // componenteTemp.respuesta = this.componente;
       console.log(this.componente);
 
-      peticion = this.componenteService.crearComponente(this.componente);
+      peticion = this.componenteService.crearComponente(this.form.value);
     }
     peticion.subscribe(componente => {
       console.log(componente);

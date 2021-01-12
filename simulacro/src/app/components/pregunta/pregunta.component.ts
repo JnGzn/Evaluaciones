@@ -25,7 +25,7 @@ export class CrearPreguntasComponent implements OnInit {
       this.examenService.obtenerPregunta(id).subscribe(pregunta => {
         if (pregunta){
           console.log(pregunta);
-          this.pregunta.id = id;
+          // this.pregunta.id = id;
           this.pregunta =  pregunta;
           this.pregunta.idComponente = this.idComponente;
         }
@@ -58,10 +58,11 @@ export class CrearPreguntasComponent implements OnInit {
       this.pregunta = {...this.form.value};
       this.pregunta.respuesta = this.respuesta;
       this.pregunta.idComponente = this.idComponente;
+      // this.pregunta.id = new Date().getTime().toString();
       peticion = this.examenService.crearPregunta(this.pregunta);
     }
     peticion.subscribe(pregunta => {
-      console.log(pregunta);
+
 
       Swal.fire({
         title: pregunta.enunciado,
