@@ -7,7 +7,7 @@ import Swal from 'sweetalert2';
 import { ExamenService } from '../../services/pregunta.service';
 import { EvaluacionService } from '../../services/evaluacion.service';
 import { Componente } from '../../interfaces/pregunta';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ComponenteService } from '../../services/componente.service';
 
 @Component({
@@ -24,7 +24,8 @@ export class EvaluacionComponent implements OnInit {
     private fb: FormBuilder,
     private _es: EvaluacionService,
     private activatedRote: ActivatedRoute,
-    private componenteService: ComponenteService
+    private componenteService: ComponenteService,
+    private router: Router
   ) {
     const id = this.activatedRote.snapshot.paramMap.get('id');
     if (id !== 'nuevo') {
@@ -32,11 +33,9 @@ export class EvaluacionComponent implements OnInit {
         this.evaluacion = evaluacion;
         this.evaluacion.id = id;
 
-        console.log(evaluacion);
         this.componenteService.obtenerComponentesExamen(id).subscribe((s) => {
           this.componentes = [];
           this.componentes = s;
-          console.log('sssss')
         });
         this.componenteService.size$.next(id);
         this.crearFormulario();
@@ -70,10 +69,12 @@ export class EvaluacionComponent implements OnInit {
 
     if (this.evaluacion.id !== 'nuevo') {
       this.form.value.id = this.evaluacion.id;
+
       peticion = this._es.actualizarExamen(this.form.value);
     } else {
       this.evaluacion = { ...this.form.value };
       delete this.evaluacion.id;
+      this.form.value.componentes = []
       console.log(this.evaluacion);
 
       peticion = this._es.crearExamen(this.evaluacion);

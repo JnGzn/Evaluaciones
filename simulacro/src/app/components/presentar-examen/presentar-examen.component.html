@@ -1,0 +1,28 @@
+<div class="bd-example">
+  <label for="exampleDataList" class="form-label h3">Buscar examen</label>
+  <input class="form-control" type="search" list="datalistOptions"
+         id="exampleDataList" placeholder="Escribe para buscar..."
+         [(ngModel)]="texto" (keyup)="autocomplete(val.value)"
+        #val>
+</div>
+
+<div  *ngIf="examenes && texto">
+  <h3 class="mt-5">
+    Resultados de: {{ texto }}
+  </h3>
+  <br>
+  <div class="card" *ngFor="let item of examenes">
+    <div class="card-header">
+      {{  item.nombre }}
+    </div>
+    <div class="card-body">
+      <!-- <h5 class="card-title"> </h5> -->
+      <p class="card-text"><b>Descripción:</b>  {{ item.descripcion }}</p>
+      <p class="card-text"><b>Duracción:</b>  {{ item.duracionMinutos }} (minutos)</p>
+      <span class="badge bg-secondary" *ngFor="let c of item.componentes"> {{ c.nombre }}</span>
+      <br>
+      <button class="btn btn-primary text-center">Presentar</button>
+    </div>
+  </div>
+
+</div>

@@ -9,11 +9,12 @@ import { ComponenteComponent } from './components/componente/componente.componen
 import { Pregunta } from './interfaces/pregunta';
 import { CrearEvaluacionComponent } from './components/evaluaciones/evaluaciones.component';
 import { ComponentesComponent } from './components/componentes/componentes.component';
+import { PresentarExamenComponent } from './components/presentar-examen/presentar-examen.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'home', component: HomeComponent},
-  {path: 'examen', component: ExamenComponent, canActivate: [GuardGuard ]},
+  {path: 'examen', component: PresentarExamenComponent, canActivate: [GuardGuard ]},
   // {path: 'evaulaciones', compon}ent: Evalu, canActivate: [GuardGuard ]},
   {path: 'pregunta/:id/:idComponente', component: CrearPreguntasComponent, canActivate: [GuardGuard ]},
   {path: 'componente/:id/:idEvaluacion', component: ComponenteComponent},

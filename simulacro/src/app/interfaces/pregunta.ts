@@ -20,6 +20,8 @@ export interface Examen {
   id: string;
   nombre: string;
   duracionMinutos: number;
+  descripcion?: string;
+  componentes?: Componente[];
 }
 
 export interface Componente {

@@ -7,7 +7,7 @@ import { NavbarComponent } from './components/shared/navbar/navbar.component';
 import { ExamenComponent } from './components/examen/examen.component';
 import { HomeComponent } from './components/home/home.component';
 import { HttpClientModule } from '@angular/common/http';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CrearPreguntasComponent } from './components/pregunta/pregunta.component';
 import { AuthModule } from '@auth0/auth0-angular';
 import { CrearEvaluacionComponent } from './components/evaluaciones/evaluaciones.component';
@@ -19,6 +19,7 @@ import { AngularFireModule } from '@angular/fire';
 import { environment } from '../environments/environment';
 import { SpinnerComponent } from './components/shared/spinner/spinner.component';
 import { CountdownModule } from 'ngx-countdown';
+import { PresentarExamenComponent } from './components/presentar-examen/presentar-examen.component';
 
 // import Swal from 'sweetalert2'
 
@@ -33,7 +34,8 @@ import { CountdownModule } from 'ngx-countdown';
     EvaluacionComponent,
     ComponenteComponent,
     ComponentesComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    PresentarExamenComponent
 
   ],
   imports: [
@@ -43,6 +45,7 @@ import { CountdownModule } from 'ngx-countdown';
     ReactiveFormsModule,
     AngularFirestoreModule,
     CountdownModule,
+    FormsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AuthModule.forRoot({
       domain: 'jngzn.us.auth0.com',

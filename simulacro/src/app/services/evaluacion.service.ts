@@ -1,8 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { Examen } from '../interfaces/pregunta';
+import { AngularFireDatabase } from '@angular/fire/database';
 
 @Injectable({
   providedIn: 'root'
@@ -10,8 +12,11 @@ import { Examen } from '../interfaces/pregunta';
 export class EvaluacionService {
 
   private urlBase = 'https://simulacros-5658f-default-rtdb.firebaseio.com';
-
-  constructor(private http: HttpClient) { }
+  examenes$: Observable<Examen[]>;
+  constructor(db: AngularFireDatabase, private http: HttpClient) {
+    this.examenes$ = db.list<Examen>('evaluaciones').valueChanges();
+    // this.examenes$.subscribe(d => console.log(d))
+  }
 
   obtenerExamenes(): Observable<Examen[]>{
     return this.http.get(`${this.urlBase}/evaluaciones.json`).pipe(
@@ -19,17 +24,26 @@ export class EvaluacionService {
     );
   }
 
+
+
   obtenerExamen(id: string): Observable<Examen>{
     return this.http.get<Examen>(`${this.urlBase}/evaluaciones/${id}.json`);
   }
 
   crearExamen(componente: Examen): Observable<Examen>{
-    return this.http.post<Examen>(`${this.urlBase}/evaluaciones.json`, componente);
+    return this.http.post<Examen>(`${this.urlBase}/evaluaciones.json`, componente).pipe(
+      map((res: any) => {
+        componente.id = res.name;
+        console.log("puto: ", res)
+        this.actualizarExamen(componente).subscribe();
+        return res;
+      })
+    );
   }
 
   actualizarExamen(pregunta: Examen): Observable<Examen>{
     const preguntaTemp = { ...pregunta };
-    delete preguntaTemp.id;
+    // delete preguntaTemp.id;
     return this.http.put<Examen>(`${this.urlBase}/evaluaciones/${pregunta.id}.json`, preguntaTemp);
   }
 
