@@ -18,6 +18,8 @@ import { AngularFirestoreModule } from '@angular/fire/firestore'
 import { AngularFireModule } from '@angular/fire';
 import { environment } from '../environments/environment';
 import { SpinnerComponent } from './components/shared/spinner/spinner.component';
+import { CountdownModule } from 'ngx-countdown';
+
 // import Swal from 'sweetalert2'
 
 @NgModule({
@@ -40,6 +42,7 @@ import { SpinnerComponent } from './components/shared/spinner/spinner.component'
     HttpClientModule,
     ReactiveFormsModule,
     AngularFirestoreModule,
+    CountdownModule,
     AngularFireModule.initializeApp(environment.firebase),
     AuthModule.forRoot({
       domain: 'jngzn.us.auth0.com',

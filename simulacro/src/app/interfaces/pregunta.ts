@@ -1,4 +1,5 @@
 
+
 export interface Pregunta {
   id: string;
   enunciado: string;
@@ -27,4 +28,13 @@ export interface Componente {
   cantPreguntas?: number;
   preguntas?: Pregunta[];
   idExamen?: string;
+}
+
+export interface Respuesta {
+  id: string;
+  enunciado: string;
+  respuesta?: string;
+  // idEvaluacion: string;
+  idPregunta?: string;
+  esCorrecta?: boolean;
 }

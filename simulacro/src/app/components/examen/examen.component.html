@@ -1,28 +1,70 @@
 <h1>Presentar examen</h1>
 <br>
-<div class="row" *ngFor="let pregunta of preguntas | async let i = index">
-  <div class="col-12 col-md-8">
-    <p><b>{{ i + 1 }}. </b>{{ pregunta.enunciado }}</p>
-    <div class="form-check" *ngFor="let opcion of pregunta.opciones">
-      <input class="form-check-input" [id]="pregunta.id" [name]="pregunta.id" type="radio">
-      <label class="form-check-label" [for]="pregunta.id">
-        {{opcion}}
-      </label>
+<ng-container *ngIf="!preguntas; else elseTemplate">
+  <app-spinner></app-spinner>
+</ng-container>
+<ng-template #elseTemplate>
+  <div class="row">
+
+    <div class="col-12 col-md-9">
+
+      <div class="row" *ngFor="let pregunta of preguntas[page - 1] let i = index">
+        <div class="col">
+          <p><b>{{ preguntaInicio + i}}. </b>{{ pregunta.enunciado }}</p>
+          <div class="form-check" *ngFor="let opcion of pregunta.opciones let j = index">
+            <input class="form-check-input" [id]="pregunta.id + ''+j" [name]="pregunta.id" (change)="actualizarRespuesta(pregunta.id, opcion)" type="radio">
+            <label class="form-check-label" [for]="pregunta.id + ''+j" (click)="actualizarRespuesta(pregunta.id, opcion)">
+              {{opcion}}
+            </label>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="col">
+      <countdown class="h2" [config]="{ leftTime: 100  }"></countdown>
+      <br>
+      <span type="button" class=" badge" *ngFor="let respuesta of respuestas let i = index"
+      [ngClass]="{ 'bg-success': respuesta.respuesta, 'bg-secondary': !respuesta.respuesta }"
+      (click)="llevarAPregunta(i)"> {{ i + 1 }} </span>
+      <div class="form-group">
+        <label class=" col-form-label">&nbsp;</label>
+        <div class="input-group col-md">
+          <button type="submit" class="btn btn-primary btn-block">
+            Guardar y salir
+          </button>
+        </div>
+      </div>
     </div>
   </div>
-  <div class="col">
 
+
+  <div class="row posAbajo">
+    <nav class="mx-auto col" aria-label="Page navigation example">
+      <ul class="pagination">
+
+        <li class="page-item" [ngClass]="{ disabled: page === 1 }" (click)="to(page - 1)">
+          <a class="page-link" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        <!-- <li class="page-item" [ngClass]="{ disabled: page === 1 }" (click)="to(page - 1)">
+          <a class="page-link">Previous</a>
+        </li> -->
+        <li class="page-item" [ngClass]="{ active: i + 1 === page}" *ngFor="let todo of preguntas; let i = index"
+            (click)="to(i + 1)">
+          <a class="page-link">{{ i + 1 }}</a>
+        </li>
+        <!-- <li class="page-item" [ngClass]="{ disabled: page === preguntas.length }" (click)="to(page + 1)">
+          <a class="page-link">Next</a>
+        </li> -->
+        <li class="page-item" [ngClass]="{ disabled: page === preguntas.length }" (click)="to(page + 1)">
+          <a class="page-link" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
   </div>
-
-
-
-</div>
-
-<div class="form-group row">
-  <label class=" col-form-label">&nbsp;</label>
-  <div class="input-group col-md">
-    <button type="submit" class="btn btn-outline-primary btn-block">
-      Guardar
-    </button>
-  </div>
-</div>
+</ng-template>
