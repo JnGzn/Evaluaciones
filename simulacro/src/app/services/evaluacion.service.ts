@@ -32,11 +32,9 @@ export class EvaluacionService {
 
   crearExamen(componente: Examen): Observable<Examen>{
     return this.http.post<Examen>(`${this.urlBase}/evaluaciones.json`, componente).pipe(
-      map((res: any) => {
+      tap((res: any) => {
         componente.id = res.name;
-        console.log("puto: ", res)
         this.actualizarExamen(componente).subscribe();
-        return res;
       })
     );
   }

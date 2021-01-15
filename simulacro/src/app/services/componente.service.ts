@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { Observable, Subject } from 'rxjs';
-import { switchMap, map, refCount } from 'rxjs/operators';
+import { switchMap, map, refCount, tap } from 'rxjs/operators';
 import { Componente } from '../interfaces/pregunta';
 
 @Injectable({
@@ -33,13 +33,11 @@ export class ComponenteService {
 
   crearComponente(componente: Componente): Observable<Componente>{
     return this.http.post<Componente>(`${this.urlBase}/componentes.json`, componente).pipe(
-      map((res: any) => {
+      tap((res: any) => {
         componente.id = res.name;
-        console.log(res);
         this.actualizarComponente(componente).subscribe();
-        return res;
       })
-    )
+    );
   }
 
   actualizarComponente(pregunta: Componente): Observable<Componente>{

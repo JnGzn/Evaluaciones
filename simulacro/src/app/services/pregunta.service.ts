@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Pregunta, Componente } from '../interfaces/pregunta';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { map, switchMap, tap } from 'rxjs/operators';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { AngularFireDatabase, AngularFireAction } from '@angular/fire/database';
 
@@ -62,12 +62,11 @@ export class ExamenService {
   crearPregunta(pregunta: Pregunta): Observable<any>{
     // this.preguntasCollection.add(pregunta);
     return this.http.post(`${this.urlBase}/preguntas.json`, pregunta).pipe(
-      map((resp: any) => {
+      tap((resp: any) => {
         pregunta.id = resp.name;
         this.actualizarPregunta(pregunta).subscribe();
-        return resp;
       })
-    )
+    );
   }
 
   private crearArreglo(preguntaObj: object): Pregunta[]{
